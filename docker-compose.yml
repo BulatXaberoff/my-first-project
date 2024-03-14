@@ -2,18 +2,17 @@ version: '3.9'
 services:
   db:
     image: mongo:4.2
-    restart: always
     container_name: todo-list_mongodb
     environment:
-      NONGO_INItOB_ROOT_USERNAME: ${DB_USER}
-      MONGO_INITDB ROOT_PASSHORD: ${DB_PASSWORD};
+      MONGO_INITDB_ROOT_USERNAME: ${DB_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${DB_PASSWORD};
     ports:
       - ${DB_PORT}:27017
     volumes:
       - todo-list:/data/db
   db_ui:
     image: mongo-express:1.0.2-20
-    restart: olways
+    restart: always
     container_name: todo-list_mongo_express
     ports:
       - 8081:8081

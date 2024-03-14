@@ -1,3 +1,5 @@
+const { TaskModel } = require('./taskModel.js');
+
 fs =require('fs');
 Task =require('./task.js');
 
@@ -7,13 +9,25 @@ module.exports = class TaskManager {
     }
 
     loadTasks(filepath) {
-        try {
-            const data = fs.readFileSync(filepath, 'utf8');
-            const tasksData = JSON.parse(data);
-            this.tasks = tasksData.map(task => new Task(task.id, task.description, task.status));
-        } catch (err) {
-            console.error('Ошибка чтения файла:', err);
-        }
+			fs.readFile('tasks.json','utf8',(err,data) =>{
+				if(err){
+					console.error("Error reading file:", err);
+					return;
+				}
+				const tasksData = JSON.parse(data);
+				this.tasks = tasksData.map(task => {
+					const newTask = new TaskModel(task);
+					newTask.save();
+					return newTask;
+				});
+			});
+        //try {
+        //    const data = fs.readFileSync(filepath, 'utf8');
+        //    const tasksData = JSON.parse(data);
+        //    this.tasks = tasksData.map(task => new Task(task.id, task.description, task.status));
+        //} catch (err) {
+        //    console.error('Ошибка чтения файла:', err);
+        //}
     }
 
     saveTasks(filepath) {
