@@ -1,0 +1,7 @@
+POST http://localhost:5000/tasks
+Content-Type: application/json
+
+{
+    "id": "999",
+    "status": "в процессе"
+}
